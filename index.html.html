@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thanksgiving Harvest: Listen, Speak & Practice!</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka for playful, legible classroom typography & Nunito for clean body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for crisp icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        body: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        autumn: {
+                            cream: '#FFF8EE',
+                            parchment: '#FDECD2',
+                            gold: '#F59E0B',
+                            amber: '#D97706',
+                            orange: '#EA580C',
+                            burnt: '#C2410C',
+                            cranberry: '#9F1239',
+                            brown: '#451A03',
+                            bark: '#78350F',
+                            leaf: '#65A30D',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base & Touch Optimization for iPads & Smartboards */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #FFF8EE 0%, #FDECD2 50%, #FBD8A8 100%);
+            color: #451A03;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* 3D Tactile Classroom Buttons */
+        .btn-tactile {
+            transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
+            box-shadow: 0 6px 0 rgba(69, 26, 3, 0.25);
+        }
+        .btn-tactile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 rgba(69, 26, 3, 0.25);
+        }
+        .btn-tactile:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(69, 26, 3, 0.25);
+        }
+
+        .btn-orange {
+            background: linear-gradient(180deg, #F97316 0%, #EA580C 100%);
+            box-shadow: 0 6px 0 #9A3412;
+        }
+        .btn-orange:active {
+            box-shadow: 0 2px 0 #9A3412;
+        }
+
+        .btn-gold {
+            background: linear-gradient(180deg, #FBBF24 0%, #D97706 100%);
+            box-shadow: 0 6px 0 #92400E;
+        }
+        .btn-gold:active {
+            box-shadow: 0 2px 0 #92400E;
+        }
+
+        .btn-cranberry {
+            background: linear-gradient(180deg, #E11D48 0%, #9F1239 100%);
+            box-shadow: 0 6px 0 #881337;
+        }
+        .btn-cranberry:active {
+            box-shadow: 0 2px 0 #881337;
+        }
+
+        .btn-leaf {
+            background: linear-gradient(180deg, #84CC16 0%, #4D7C0F 100%);
+            box-shadow: 0 6px 0 #365314;
+        }
+        .btn-leaf:active {
+            box-shadow: 0 2px 0 #365314;
+        }
+
+        /* Card Pop & Glow Animations */
+        .vocab-card {
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 0 #D97706, 0 12px 20px rgba(120, 53, 15, 0.12);
+        }
+        .vocab-card:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+        .vocab-card:active {
+            transform: translateY(4px) scale(0.98);
+            box-shadow: 0 3px 0 #D97706;
+        }
+        .vocab-card.speaking {
+            border-color: #EA580C;
+            background-color: #FEF3C7;
+            transform: scale(1.05);
+            box-shadow: 0 0 0 6px rgba(234, 88, 12, 0.3), 0 8px 0 #EA580C;
+        }
+
+        /* Falling Autumn Leaves Background Canvas */
+        #leaves-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Microphone Pulse Animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            70% { transform: scale(1.35); opacity: 0; }
+            100% { transform: scale(1.35); opacity: 0; }
+        }
+        .mic-listening::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 9999px;
+            background-color: #E11D48;
+            animation: pulse-ring 1.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            z-index: -1;
+        }
+
+        /* Soundwave Bars */
+        @keyframes soundbar {
+            0%, 100% { height: 12px; }
+            50% { height: 42px; }
+        }
+        .wave-bar {
+            animation: soundbar 0.6s ease-in-out infinite;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.2s; }
+
+        /* Bounce Animation for Rewards */
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Active Team Glow */
+        .team-active {
+            transform: scale(1.03);
+            box-shadow: 0 0 0 4px #F59E0B, 0 10px 20px rgba(180, 83, 9, 0.25);
+        }
+        .team-inactive {
+            opacity: 0.78;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="relative flex flex-col justify-between selection:bg-amber-200">
+
+    <!-- Background Falling Leaves & Celebration Confetti Canvas -->
+    <canvas id="leaves-canvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="relative z-10 max-w-6xl w-full mx-auto px-3 sm:px-5 py-3 sm:py-5 flex flex-col min-h-screen">
+
+        <!-- TOP HEADER & AUDIO CONTROLS BAR -->
+        <header class="bg-white/95 backdrop-blur-md border-4 border-amber-500 rounded-3xl p-3 sm:p-4 shadow-lg flex flex-wrap items-center justify-between gap-3 mb-4">
+            <!-- Brand / Title -->
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-amber-400 to-orange-600 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl shadow-inner border-2 border-amber-200 shrink-0">
+                    🦃
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-autumn-brown tracking-wide leading-tight">
+                        Thanksgiving Harvest
+                    </h1>
+                    <p class="text-xs sm:text-sm font-bold text-autumn-burnt">
+                        2-Team Classroom Challenge
+                    </p>
+                </div>
+            </div>
+
+            <!-- Separate Voice (TTS), Speed, and Sound Effects (SFX) Toggles -->
+            <div class="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+                <!-- 1. Speaking / Voice (TTS) Toggle -->
+                <button id="voice-toggle-btn" onclick="toggleVoice()" class="btn-tactile bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-500 text-emerald-950 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base" title="Turn Speaking Voice On or Off">
+                    <i id="voice-icon" class="fa-solid fa-comment-dots text-emerald-700 text-lg"></i>
+                    <span id="voice-label">Voice: ON</span>
+                </button>
+
+                <!-- 2. Voice Speed Toggle (Normal vs Slow) -->
+                <button id="speed-btn" onclick="toggleSpeed()" class="btn-tactile bg-amber-100 hover:bg-amber-200 border-2 border-amber-400 text-autumn-brown font-bold px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-2xl flex items-center gap-1.5 text-sm sm:text-base" title="Toggle Voice Speed">
+                    <span id="speed-icon">🐇</span>
+                    <span id="speed-label" class="hidden md:inline">Normal</span>
+                </button>
+
+                <!-- 3. Sound Effects (SFX) Toggle -->
+                <button id="sfx-toggle-btn" onclick="toggleSfx()" class="btn-tactile bg-amber-100 hover:bg-amber-200 border-2 border-amber-500 text-autumn-brown font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base" title="Turn Sound Effects On or Off">
+                    <i id="sfx-icon" class="fa-solid fa-volume-high text-orange-600 text-lg"></i>
+                    <span id="sfx-label">SFX: ON</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 2-GROUP COMPETITION SCOREBOARD & COUNTDOWN TIMER BAR -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 mb-5 items-stretch">
+            
+            <!-- TEAM 1: TEAM PUMPKIN -->
+            <div id="card-team-1" onclick="setActiveTeam(1)" class="lg:col-span-4 team-active bg-gradient-to-br from-orange-100 to-amber-50 border-4 border-orange-500 rounded-3xl p-3 sm:p-4 cursor-pointer transition-all flex items-center justify-between gap-2 relative">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="text-4xl sm:text-5xl bg-white w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center border-2 border-orange-300 shadow-sm shrink-0">
+                        🎃
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-1.5">
+                            <span id="badge-team-1" class="bg-orange-600 text-white text-[11px] font-extrabold uppercase px-2 py-0.5 rounded-full tracking-wider">
+                                Active Turn
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <h2 id="name-team-1" class="font-display font-bold text-lg sm:text-xl text-autumn-brown truncate">
+                                Team Pumpkin
+                            </h2>
+                            <button onclick="event.stopPropagation(); editTeamName(1)" class="text-orange-700 hover:text-orange-950 p-1 text-xs" title="Edit Team Name">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Score & Manual +/- Controls -->
+                <div class="flex items-center gap-1.5 shrink-0" onclick="event.stopPropagation()">
+                    <button onclick="adjustTeamScore(1, -1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-orange-200 hover:bg-orange-300 text-orange-900 font-bold text-lg flex items-center justify-center">
+                        -
+                    </button>
+                    <div id="score-team-1" class="font-display font-bold text-3xl sm:text-4xl text-orange-700 min-w-[42px] text-center">
+                        0
+                    </div>
+                    <button onclick="adjustTeamScore(1, 1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg flex items-center justify-center shadow-sm">
+                        +
+                    </button>
+                </div>
+            </div>
+
+            <!-- CENTER: COUNTDOWN TIMER & MATCH CONTROLS -->
+            <div class="lg:col-span-4 bg-white/95 border-4 border-amber-400 rounded-3xl p-3 sm:p-4 shadow-md flex flex-col justify-between gap-2">
+                <div class="flex items-center justify-between gap-2">
+                    <!-- Timer Duration Selector -->
+                    <div class="flex items-center gap-1 bg-amber-100 p-1 rounded-xl border border-amber-300">
+                        <button onclick="setTimerPreset(0)" id="preset-0" class="timer-preset px-2 py-1 rounded-lg text-xs font-extrabold text-autumn-brown hover:bg-amber-200">Off</button>
+                        <button onclick="setTimerPreset(30)" id="preset-30" class="timer-preset px-2 py-1 rounded-lg text-xs font-extrabold bg-amber-500 text-white">30s</button>
+                        <button onclick="setTimerPreset(60)" id="preset-60" class="timer-preset px-2 py-1 rounded-lg text-xs font-extrabold text-autumn-brown hover:bg-amber-200">60s</button>
+                        <button onclick="setTimerPreset(90)" id="preset-90" class="timer-preset px-2 py-1 rounded-lg text-xs font-extrabold text-autumn-brown hover:bg-amber-200">90s</button>
+                    </div>
+
+                    <!-- Auto-Switch Turn Toggle -->
+                    <button id="autoswitch-btn" onclick="toggleAutoSwitch()" class="text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-amber-100 border border-amber-400 text-autumn-brown flex items-center gap-1" title="Automatically switch teams after each question">
+                        <i class="fa-solid fa-repeat text-orange-600"></i>
+                        <span id="autoswitch-label">Auto-Turn: ON</span>
+                    </button>
+                </div>
+
+                <!-- Timer Readout & Progress Bar -->
+                <div class="flex items-center justify-between gap-3 my-0.5">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-stopwatch text-2xl text-orange-600"></i>
+                        <span id="timer-display" class="font-display font-bold text-3xl sm:text-4xl text-autumn-brown tabular-nums">
+                            00:30
+                        </span>
+                    </div>
+
+                    <!-- Start / Pause / Reset Timer Buttons -->
+                    <div class="flex items-center gap-1.5">
+                        <button id="timer-start-btn" onclick="toggleTimer()" class="btn-tactile btn-leaf text-white font-display font-bold px-3.5 py-1.5 rounded-xl text-sm sm:text-base flex items-center gap-1.5">
+                            <i id="timer-start-icon" class="fa-solid fa-play"></i>
+                            <span id="timer-start-text">Start</span>
+                        </button>
+                        <button onclick="resetTimer()" class="btn-tactile bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold px-2.5 py-1.5 rounded-xl text-sm sm:text-base" title="Reset Timer">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visual Countdown Progress Bar -->
+                <div class="w-full h-2.5 bg-amber-100 rounded-full overflow-hidden border border-amber-300">
+                    <div id="timer-bar" class="h-full bg-gradient-to-r from-lime-500 via-amber-500 to-orange-600 transition-all duration-300" style="width: 100%;"></div>
+                </div>
+
+                <!-- Quick Switch Turn / Crown Winner / Reset Game -->
+                <div class="flex items-center justify-between gap-2 pt-1 border-t border-amber-200 text-xs font-bold">
+                    <button onclick="switchTurn(true)" class="text-orange-700 hover:text-orange-950 flex items-center gap-1 py-0.5">
+                        <i class="fa-solid fa-right-left"></i> Switch Turn
+                    </button>
+                    <button onclick="openCelebrationModal()" class="text-amber-700 hover:text-amber-950 flex items-center gap-1 py-0.5">
+                        <i class="fa-solid fa-trophy text-amber-500"></i> Crown Winner
+                    </button>
+                    <button onclick="resetCompetition()" class="text-rose-700 hover:text-rose-950 flex items-center gap-1 py-0.5">
+                        <i class="fa-solid fa-arrows-rotate"></i> Reset Scores
+                    </button>
+                </div>
+            </div>
+
+            <!-- TEAM 2: TEAM ACORN -->
+            <div id="card-team-2" onclick="setActiveTeam(2)" class="lg:col-span-4 team-inactive bg-gradient-to-br from-amber-100 to-yellow-50 border-4 border-amber-500 rounded-3xl p-3 sm:p-4 cursor-pointer transition-all flex items-center justify-between gap-2 relative">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="text-4xl sm:text-5xl bg-white w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center border-2 border-amber-300 shadow-sm shrink-0">
+                        🌰
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-1.5">
+                            <span id="badge-team-2" class="hidden bg-amber-700 text-white text-[11px] font-extrabold uppercase px-2 py-0.5 rounded-full tracking-wider">
+                                Active Turn
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <h2 id="name-team-2" class="font-display font-bold text-lg sm:text-xl text-autumn-brown truncate">
+                                Team Acorn
+                            </h2>
+                            <button onclick="event.stopPropagation(); editTeamName(2)" class="text-amber-800 hover:text-amber-950 p-1 text-xs" title="Edit Team Name">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Score & Manual +/- Controls -->
+                <div class="flex items-center gap-1.5 shrink-0" onclick="event.stopPropagation()">
+                    <button onclick="adjustTeamScore(2, -1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold text-lg flex items-center justify-center">
+                        -
+                    </button>
+                    <div id="score-team-2" class="font-display font-bold text-3xl sm:text-4xl text-amber-800 min-w-[42px] text-center">
+                        0
+                    </div>
+                    <button onclick="adjustTeamScore(2, 1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-lg flex items-center justify-center shadow-sm">
+                        +
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIME'S UP BANNER (Hidden until timer reaches 0) -->
+        <div id="times-up-banner" class="hidden bg-rose-600 text-white border-4 border-rose-300 rounded-3xl p-4 mb-5 shadow-xl items-center justify-between flex-wrap gap-3 animate-pop">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl sm:text-4xl">⏰</span>
+                <div>
+                    <h3 class="font-display font-bold text-xl sm:text-2xl">Time's Up!</h3>
+                    <p id="times-up-subtext" class="text-sm sm:text-base font-bold text-rose-100">
+                        Great effort! Ready for the next team's turn?
+                    </p>
+                </div>
+            </div>
+            <button onclick="handleTimesUpNextTurn()" class="btn-tactile bg-white text-rose-800 font-display font-bold px-5 py-2.5 rounded-2xl text-lg flex items-center gap-2">
+                <span>Next Team & Restart Timer</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- NAVIGATION TABS (Large Touch Targets for iPads & Smartboards) -->
+        <nav class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 mb-6">
+            <button onclick="switchTab('vocab')" id="tab-vocab" class="nav-tab btn-tactile btn-orange text-white font-display font-bold text-base sm:text-xl py-3.5 px-3 rounded-2xl flex items-center justify-center gap-2 border-2 border-orange-300">
+                <span class="text-xl sm:text-2xl">👂</span>
+                <span>1. Words</span>
+            </button>
+            <button onclick="switchTab('sentences')" id="tab-sentences" class="nav-tab btn-tactile bg-white text-autumn-brown font-display font-bold text-base sm:text-xl py-3.5 px-3 rounded-2xl flex items-center justify-center gap-2 border-2 border-amber-300">
+                <span class="text-xl sm:text-2xl">💬</span>
+                <span>2. Sentences</span>
+            </button>
+            <button onclick="switchTab('practice')" id="tab-practice" class="nav-tab btn-tactile bg-white text-autumn-brown font-display font-bold text-base sm:text-xl py-3.5 px-3 rounded-2xl flex items-center justify-center gap-2 border-2 border-amber-300">
+                <span class="text-xl sm:text-2xl">🧩</span>
+                <span>3. Practice</span>
+            </button>
+            <button onclick="switchTab('speak')" id="tab-speak" class="nav-tab btn-tactile bg-white text-autumn-brown font-display font-bold text-base sm:text-xl py-3.5 px-3 rounded-2xl flex items-center justify-center gap-2 border-2 border-amber-300">
+                <span class="text-xl sm:text-2xl">🎙️</span>
+                <span>4. Speak</span>
+            </button>
+        </nav>
+
+        <!-- MAIN INTERACTIVE WORKSPACE -->
+        <main class="flex-grow flex flex-col">
+
+            <!-- ========================================== -->
+            <!-- MODE 1: VOCABULARY EXPLORER (LISTEN & LEARN) -->
+            <!-- ========================================== -->
+            <section id="view-vocab" class="game-view flex flex-col gap-5">
+                <div class="bg-white/85 backdrop-blur-sm border-2 border-amber-300 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-autumn-brown">Thanksgiving Words</h2>
+                        <p class="text-autumn-bark font-semibold text-base sm:text-lg">Tap any picture card to listen and repeat!</p>
+                    </div>
+                    <button onclick="playAllVocab()" class="btn-tactile btn-gold text-white font-display font-bold px-5 py-3 rounded-2xl text-lg flex items-center gap-2 shrink-0">
+                        <i class="fa-solid fa-play"></i> Listen to All
+                    </button>
+                </div>
+
+                <!-- 6 Core Vocabulary Cards Grid -->
+                <div id="vocab-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <!-- Populated via JavaScript -->
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- MODE 2: THANKFUL SENTENCES (LISTEN & TAP)    -->
+            <!-- ========================================== -->
+            <section id="view-sentences" class="game-view hidden flex-col gap-5">
+                <div class="bg-white/85 backdrop-blur-sm border-2 border-amber-300 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-autumn-brown">I Am Thankful For...</h2>
+                        <p class="text-autumn-bark font-semibold text-base sm:text-lg">Tap the speaker to hear the whole sentence, or tap any word!</p>
+                    </div>
+                    <div class="bg-amber-100 border-2 border-amber-400 px-4 py-2 rounded-2xl font-bold text-autumn-brown text-sm sm:text-base">
+                        💡 Tip: Tap individual words!
+                    </div>
+                </div>
+
+                <!-- 7 Target Sentences List -->
+                <div id="sentences-list" class="flex flex-col gap-4">
+                    <!-- Populated via JavaScript -->
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- MODE 3: HARVEST PRACTICE (QUIZ & BUILDER)    -->
+            <!-- ========================================== -->
+            <section id="view-practice" class="game-view hidden flex-col gap-5">
+                <!-- Sub-mode selector -->
+                <div class="bg-white/85 backdrop-blur-sm border-2 border-amber-300 rounded-3xl p-4 flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-autumn-brown">Harvest Practice</h2>
+                        <p class="text-autumn-bark font-semibold text-base">Listen carefully and complete the challenge!</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="setPracticeType('match')" id="btn-mode-match" class="btn-tactile btn-orange text-white font-display font-bold px-4 py-2.5 rounded-2xl text-base sm:text-lg">
+                            🎧 Picture Match
+                        </button>
+                        <button onclick="setPracticeType('builder')" id="btn-mode-builder" class="btn-tactile bg-amber-100 text-autumn-brown border-2 border-amber-400 font-display font-bold px-4 py-2.5 rounded-2xl text-base sm:text-lg">
+                            🧱 Sentence Builder
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE A: LISTEN & MATCH PICTURE -->
+                <div id="practice-match-area" class="bg-white/95 border-4 border-amber-400 rounded-3xl p-5 sm:p-8 shadow-xl flex flex-col items-center gap-6">
+                    <div class="text-center">
+                        <span class="inline-block bg-amber-100 text-amber-800 font-bold px-4 py-1 rounded-full text-sm mb-2 border border-amber-300">
+                            Listen & Choose
+                        </span>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-autumn-brown mb-4">
+                            Tap the speaker, then pick the right card!
+                        </h3>
+                        <button onclick="speakCurrentMatchPrompt()" class="btn-tactile btn-gold text-white font-display font-bold text-xl sm:text-2xl px-8 py-4 rounded-3xl inline-flex items-center gap-3">
+                            <i class="fa-solid fa-volume-high text-2xl sm:text-3xl animate-bounce"></i>
+                            <span id="match-prompt-text">Hear Clue</span>
+                        </button>
+                    </div>
+
+                    <!-- Options Grid -->
+                    <div id="match-options-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full max-w-4xl">
+                        <!-- Populated via JS -->
+                    </div>
+
+                    <!-- Feedback Banner -->
+                    <div id="match-feedback" class="h-12 flex items-center justify-center font-display font-bold text-xl sm:text-2xl text-center"></div>
+                </div>
+
+                <!-- PRACTICE B: SENTENCE BUILDER -->
+                <div id="practice-builder-area" class="hidden bg-white/95 border-4 border-amber-400 rounded-3xl p-5 sm:p-8 shadow-xl flex flex-col items-center gap-6">
+                    <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                        <div id="builder-emoji" class="text-6xl sm:text-7xl bg-amber-100 p-4 rounded-3xl border-2 border-amber-300 shadow-inner">
+                            👨‍👩‍👧‍👦
+                        </div>
+                        <div>
+                            <span class="inline-block bg-orange-100 text-orange-800 font-bold px-3 py-1 rounded-full text-sm mb-1">
+                                Put the words in order
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-bold text-autumn-brown mb-2">
+                                Build the Thankful Sentence!
+                            </h3>
+                            <button onclick="speakBuilderTarget()" class="btn-tactile btn-gold text-white font-display font-bold px-5 py-2.5 rounded-2xl text-lg inline-flex items-center gap-2">
+                                <i class="fa-solid fa-ear-listen"></i> Listen to Target
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Answer Drop Zone -->
+                    <div id="builder-answer-zone" class="w-full min-h-[84px] bg-amber-50 border-4 border-dashed border-amber-400 rounded-3xl p-3 sm:p-4 flex flex-wrap items-center justify-center gap-2.5">
+                        <span class="text-amber-600/70 font-bold text-lg">Tap words below to build your sentence...</span>
+                    </div>
+
+                    <!-- Word Bank -->
+                    <div id="builder-word-bank" class="w-full flex flex-wrap items-center justify-center gap-3 py-2">
+                        <!-- Shuffled word tiles -->
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <button onclick="resetCurrentBuilder()" class="btn-tactile bg-stone-200 hover:bg-stone-300 text-stone-800 font-display font-bold px-6 py-3 rounded-2xl text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-left"></i> Clear
+                        </button>
+                        <button onclick="checkBuilderSentence()" class="btn-tactile btn-leaf text-white font-display font-bold px-8 py-3 rounded-2xl text-xl flex items-center gap-2">
+                            <i class="fa-solid fa-check"></i> Check Sentence
+                        </button>
+                    </div>
+
+                    <div id="builder-feedback" class="h-10 flex items-center justify-center font-display font-bold text-xl sm:text-2xl text-center"></div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- MODE 4: SPEAK & SHINE (MICROPHONE PRACTICE)  -->
+            <!-- ========================================== -->
+            <section id="view-speak" class="game-view hidden flex-col gap-5">
+                <div class="bg-white/85 backdrop-blur-sm border-2 border-amber-300 rounded-3xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-autumn-brown">Speak & Shine!</h2>
+                        <p class="text-autumn-bark font-semibold text-base">Listen first, then tap the microphone and say it aloud!</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="prevSpeakItem()" class="btn-tactile bg-amber-100 border-2 border-amber-400 text-autumn-brown font-bold px-4 py-2.5 rounded-2xl text-lg">
+                            <i class="fa-solid fa-arrow-left"></i> Prev
+                        </button>
+                        <span id="speak-counter" class="font-display font-bold text-lg px-3 text-autumn-brown">1 / 13</span>
+                        <button onclick="nextSpeakItem()" class="btn-tactile bg-amber-100 border-2 border-amber-400 text-autumn-brown font-bold px-4 py-2.5 rounded-2xl text-lg">
+                            Next <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Speaking Stage -->
+                <div class="bg-white/95 border-4 border-amber-400 rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col items-center text-center gap-6">
+                    <!-- Category Badge -->
+                    <span id="speak-category-badge" class="bg-orange-100 text-orange-800 border border-orange-300 font-bold px-4 py-1 rounded-full text-sm uppercase tracking-wider">
+                        Thanksgiving Word
+                    </span>
+
+                    <!-- Visual Illustration -->
+                    <div id="speak-emoji" class="text-7xl sm:text-8xl bg-gradient-to-b from-amber-50 to-amber-100 w-32 h-32 sm:w-40 sm:h-40 rounded-3xl border-4 border-amber-300 flex items-center justify-center shadow-md">
+                        🦃
+                    </div>
+
+                    <!-- Target Phrase -->
+                    <div class="max-w-2xl">
+                        <h3 id="speak-target-text" class="font-display font-bold text-3xl sm:text-5xl text-autumn-brown leading-tight">
+                            roast turkey
+                        </h3>
+                    </div>
+
+                    <!-- Action Buttons: Listen & Microphone -->
+                    <div class="flex flex-wrap items-center justify-center gap-5 sm:gap-8 my-2">
+                        <!-- Listen Button -->
+                        <button onclick="listenToSpeakTarget()" class="btn-tactile btn-gold text-white font-display font-bold text-xl sm:text-2xl px-7 py-5 rounded-3xl flex items-center gap-3">
+                            <i class="fa-solid fa-volume-high text-2xl"></i>
+                            <span>Listen First</span>
+                        </button>
+
+                        <!-- Big Microphone Button -->
+                        <div class="relative">
+                            <button id="mic-btn" onclick="toggleSpeechRecognition()" class="btn-tactile btn-cranberry text-white font-display font-bold text-xl sm:text-2xl px-8 py-5 rounded-3xl flex items-center gap-3 relative z-10">
+                                <i id="mic-icon" class="fa-solid fa-microphone text-2xl"></i>
+                                <span id="mic-btn-label">Tap to Speak</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Animated Soundwave Visualizer (Visible when listening) -->
+                    <div id="soundwave-box" class="hidden items-center justify-center gap-2 h-12">
+                        <div class="wave-bar w-2.5 bg-rose-500 rounded-full"></div>
+                        <div class="wave-bar w-2.5 bg-orange-500 rounded-full"></div>
+                        <div class="wave-bar w-2.5 bg-amber-500 rounded-full"></div>
+                        <div class="wave-bar w-2.5 bg-orange-500 rounded-full"></div>
+                        <div class="wave-bar w-2.5 bg-rose-500 rounded-full"></div>
+                        <span class="ml-3 font-bold text-rose-700 text-lg animate-pulse">Listening... Speak clearly!</span>
+                    </div>
+
+                    <!-- Recognition Transcript & Feedback -->
+                    <div id="speak-result-box" class="w-full max-w-xl bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 min-h-[76px] flex flex-col items-center justify-center">
+                        <p id="speak-transcript" class="text-stone-600 font-bold text-lg">
+                            Tap <span class="text-rose-700">"Tap to Speak"</span> and say the phrase!
+                        </p>
+                    </div>
+
+                    <!-- Kid-Friendly Self-Check / Smartboard Classroom Fallback -->
+                    <div class="pt-3 border-t border-amber-200 w-full max-w-xl flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <span class="text-sm font-bold text-amber-800">Teacher / Smartboard Score Award:</span>
+                        <button onclick="manualSpeakSuccess()" class="btn-tactile btn-leaf text-white font-display font-bold px-6 py-3 rounded-2xl text-base sm:text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-star"></i>
+                            <span id="speak-award-btn-label">✅ Point for Team Pumpkin (+1)</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="mt-8 text-center text-autumn-bark/80 font-bold text-sm pb-2">
+            🍂 Happy Thanksgiving! Compete, listen, and speak to win the Harvest Cup! 🏆
+        </footer>
+    </div>
+
+    <!-- CUSTOM TEAM NAME EDIT MODAL (Replaces prompt() for iPad/Smartboard compatibility) -->
+    <div id="edit-team-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-autumn-cream border-4 border-amber-500 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl animate-pop">
+            <h3 class="font-display font-bold text-2xl text-autumn-brown mb-2">Edit Team Name</h3>
+            <p class="text-sm font-bold text-autumn-bark mb-4">Enter a fun classroom name for this group:</p>
+            <input id="team-name-input" type="text" maxlength="20" class="w-full text-center font-display font-bold text-2xl text-autumn-brown bg-white border-4 border-amber-400 rounded-2xl px-4 py-3 mb-5 focus:outline-none focus:border-orange-500" />
+            <div class="flex gap-3">
+                <button onclick="closeEditTeamModal()" class="btn-tactile bg-stone-200 text-stone-800 font-display font-bold text-lg py-3 rounded-2xl w-1/2">
+                    Cancel
+                </button>
+                <button onclick="saveTeamName()" class="btn-tactile btn-orange text-white font-display font-bold text-lg py-3 rounded-2xl w-1/2">
+                    Save Name
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CELEBRATION / WINNER MODAL -->
+    <div id="celebration-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-autumn-cream border-4 border-amber-500 rounded-3xl max-w-lg w-full p-6 sm:p-8 text-center shadow-2xl animate-pop">
+            <div id="winner-emoji" class="text-7xl mb-2">🏆🦃</div>
+            <h2 id="winner-headline" class="font-display font-bold text-3xl sm:text-4xl text-autumn-brown mb-2">
+                Happy Thanksgiving!
+            </h2>
+            <p id="winner-subtext" class="text-lg font-bold text-autumn-bark mb-5">
+                Amazing teamwork listening, speaking, and practicing!
+            </p>
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <div class="bg-orange-100 border-2 border-orange-400 rounded-2xl p-3">
+                    <div id="modal-t1-name" class="text-sm font-extrabold text-orange-900 truncate">🎃 Team Pumpkin</div>
+                    <div id="modal-t1-score" class="text-3xl font-display font-bold text-orange-600 mt-1">0</div>
+                </div>
+                <div class="bg-amber-100 border-2 border-amber-400 rounded-2xl p-3">
+                    <div id="modal-t2-name" class="text-sm font-extrabold text-amber-900 truncate">🌰 Team Acorn</div>
+                    <div id="modal-t2-score" class="text-3xl font-display font-bold text-amber-700 mt-1">0</div>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="closeCelebrationModal()" class="btn-tactile btn-orange text-white font-display font-bold text-xl px-6 py-3.5 rounded-2xl flex-1">
+                    Keep Playing
+                </button>
+                <button onclick="resetCompetition(); closeCelebrationModal();" class="btn-tactile bg-amber-200 text-autumn-brown border-2 border-amber-400 font-display font-bold text-lg px-5 py-3.5 rounded-2xl">
+                    New Game
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           1. CURRICULUM DATA (Exact Vocabulary & Sentences Requested)
+           ========================================================================== */
+        const VOCAB_ITEMS = [
+            {
+                id: 'family',
+                word: 'family',
+                emoji: '👨‍👩‍👧‍👦',
+                bg: 'from-orange-100 to-amber-50',
+                hint: 'People who love and care for each other'
+            },
+            {
+                id: 'home',
+                word: 'home',
+                emoji: '🏡',
+                bg: 'from-amber-100 to-yellow-50',
+                hint: 'A warm, cozy place where we live'
+            },
+            {
+                id: 'turkey',
+                word: 'roast turkey',
+                emoji: '🦃',
+                bg: 'from-red-100 to-orange-50',
+                hint: 'The big traditional Thanksgiving dinner'
+            },
+            {
+                id: 'corn',
+                word: 'corn',
+                emoji: '🌽',
+                bg: 'from-yellow-100 to-amber-50',
+                hint: 'Sweet yellow kernels from the autumn harvest'
+            },
+            {
+                id: 'pie',
+                word: 'pumpkin pie',
+                emoji: '🥧',
+                bg: 'from-orange-200 to-amber-100',
+                hint: 'A sweet spiced autumn dessert'
+            },
+            {
+                id: 'potato',
+                word: 'mashed potato',
+                emoji: '🥔',
+                bg: 'from-amber-100 to-stone-100',
+                hint: 'Creamy, fluffy potatoes with gravy'
+            }
+        ];
+
+        const SENTENCE_ITEMS = [
+            {
+                id: 's_family',
+                text: 'I am thankful for my family',
+                emoji: '👨‍👩‍👧‍👦',
+                highlight: 'family'
+            },
+            {
+                id: 's_friends',
+                text: 'I am thankful for my friends',
+                emoji: '🧑‍🤝‍🧑',
+                highlight: 'friends'
+            },
+            {
+                id: 's_clothes',
+                text: 'I am thankful for my clothes',
+                emoji: '🧥',
+                highlight: 'clothes'
+            },
+            {
+                id: 's_mom',
+                text: 'I am thankful for my mom',
+                emoji: '👩',
+                highlight: 'mom'
+            },
+            {
+                id: 's_dad',
+                text: 'I am thankful for my dad',
+                emoji: '👨',
+                highlight: 'dad'
+            },
+            {
+                id: 's_teachers',
+                text: 'I am thankful for my teachers',
+                emoji: '👩‍🏫',
+                highlight: 'teachers'
+            },
+            {
+                id: 's_pets',
+                text: 'I am thankful for my pets',
+                emoji: '🐶',
+                highlight: 'pets'
+            }
+        ];
+
+        // Combined list for the Speaking Challenge
+        const ALL_SPEAK_ITEMS = [
+            ...VOCAB_ITEMS.map(v => ({ type: 'Thanksgiving Word', text: v.word, emoji: v.emoji })),
+            ...SENTENCE_ITEMS.map(s => ({ type: 'Thankful Sentence', text: s.text, emoji: s.emoji }))
+        ];
+
+        /* ==========================================================================
+           2. STATE MANAGEMENT (2-Group Competition, Timer & Separate Audio Toggles)
+           ========================================================================== */
+        let teams = {
+            1: { name: 'Team Pumpkin', emoji: '🎃', score: 0 },
+            2: { name: 'Team Acorn', emoji: '🌰', score: 0 }
+        };
+        let activeTeam = 1;
+        let autoSwitchTurn = true;
+        let editingTeamId = null;
+
+        // Audio Toggles (Separate Speaking Voice & Sound Effects)
+        let isVoiceOn = true;
+        let isSfxOn = true;
+        let speechRate = 0.92;
+        let isSlowMode = false;
+        let currentTab = 'vocab';
+
+        // Countdown Timer State
+        let timerPresetSeconds = 30;
+        let timerRemainingSeconds = 30;
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        // Practice Match State
+        let currentMatchItem = null;
+        let matchLocked = false;
+
+        // Sentence Builder State
+        let builderIndex = 0;
+        let builderSelectedWords = [];
+        let builderAvailableWords = [];
+
+        // Speaking State
+        let speakIndex = 0;
+        let recognition = null;
+        let isListening = false;
+
+        /* ==========================================================================
+           3. WEB AUDIO API SOUND EFFECTS (Warm, Cozy Synthesized Sounds)
+           ========================================================================== */
+        let audioCtx = null;
+
+        function ensureAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playTone(freq, type = 'sine', duration = 0.18, startTimeOffset = 0, gainPeak = 0.18) {
+            if (!isSfxOn) return;
+            ensureAudioContext();
+            if (!audioCtx) return;
+
+            const now = audioCtx.currentTime + startTimeOffset;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, now);
+
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.exponentialRampToValueAtTime(gainPeak, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + duration + 0.02);
+        }
+
+        // Gentle wooden marimba tap
+        function sfxTap() {
+            playTone(523.25, 'triangle', 0.12, 0, 0.15);
+        }
+
+        // Subtle timer tick for last 5 seconds
+        function sfxTick() {
+            playTone(880, 'sine', 0.06, 0, 0.08);
+        }
+
+        // Time's up gentle double chime
+        function sfxTimesUp() {
+            playTone(440, 'triangle', 0.25, 0.00, 0.22);
+            playTone(349.23, 'triangle', 0.45, 0.22, 0.22);
+        }
+
+        // Cheerful rising arpeggio for correct answers
+        function sfxSuccess() {
+            playTone(523.25, 'triangle', 0.18, 0.00, 0.2);
+            playTone(659.25, 'triangle', 0.18, 0.09, 0.2);
+            playTone(783.99, 'triangle', 0.25, 0.18, 0.22);
+            playTone(1046.50, 'sine', 0.45, 0.27, 0.25);
+        }
+
+        // Soft gentle boop for try again
+        function sfxTryAgain() {
+            playTone(330, 'sine', 0.18, 0, 0.14);
+            playTone(293.66, 'sine', 0.24, 0.14, 0.14);
+        }
+
+        // Warm Thanksgiving celebration fanfare
+        function sfxFanfare() {
+            const notes = [523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50];
+            const times = [0, 0.12, 0.24, 0.36, 0.52, 0.66];
+            notes.forEach((n, i) => playTone(n, 'triangle', 0.3, times[i], 0.22));
+        }
+
+        // Toggle Speaking / Voice (TTS) On & Off
+        function toggleVoice() {
+            isVoiceOn = !isVoiceOn;
+            const btn = document.getElementById('voice-toggle-btn');
+            const icon = document.getElementById('voice-icon');
+            const label = document.getElementById('voice-label');
+
+            if (isVoiceOn) {
+                btn.className = 'btn-tactile bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-500 text-emerald-950 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base';
+                icon.className = 'fa-solid fa-comment-dots text-emerald-700 text-lg';
+                label.textContent = 'Voice: ON';
+                sfxTap();
+                speakText('Voice on');
+            } else {
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                btn.className = 'btn-tactile bg-stone-200 hover:bg-stone-300 border-2 border-stone-400 text-stone-600 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base';
+                icon.className = 'fa-solid fa-comment-slash text-stone-500 text-lg';
+                label.textContent = 'Voice: OFF';
+                sfxTap();
+            }
+        }
+
+        // Toggle Sound Effects (SFX) On & Off
+        function toggleSfx() {
+            isSfxOn = !isSfxOn;
+            const btn = document.getElementById('sfx-toggle-btn');
+            const icon = document.getElementById('sfx-icon');
+            const label = document.getElementById('sfx-label');
+
+            if (isSfxOn) {
+                btn.className = 'btn-tactile bg-amber-100 hover:bg-amber-200 border-2 border-amber-500 text-autumn-brown font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base';
+                icon.className = 'fa-solid fa-volume-high text-orange-600 text-lg';
+                label.textContent = 'SFX: ON';
+                sfxTap();
+            } else {
+                btn.className = 'btn-tactile bg-stone-200 hover:bg-stone-300 border-2 border-stone-400 text-stone-600 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base';
+                icon.className = 'fa-solid fa-volume-xmark text-stone-500 text-lg';
+                label.textContent = 'SFX: OFF';
+            }
+        }
+
+        function toggleSpeed() {
+            isSlowMode = !isSlowMode;
+            speechRate = isSlowMode ? 0.65 : 0.92;
+            document.getElementById('speed-icon').textContent = isSlowMode ? '🐢' : '🐇';
+            document.getElementById('speed-label').textContent = isSlowMode ? 'Slow' : 'Normal';
+            sfxTap();
+            speakText(isSlowMode ? 'Slow voice' : 'Normal voice');
+        }
+
+        /* ==========================================================================
+           3B. 2-TEAM COMPETITION LOGIC
+           ========================================================================== */
+        function updateTeamScoreboardUI() {
+            [1, 2].forEach(id => {
+                const card = document.getElementById(`card-team-${id}`);
+                const badge = document.getElementById(`badge-team-${id}`);
+                document.getElementById(`name-team-${id}`).textContent = teams[id].name;
+                document.getElementById(`score-team-${id}`).textContent = teams[id].score;
+
+                if (activeTeam === id) {
+                    card.classList.remove('team-inactive');
+                    card.classList.add('team-active');
+                    badge.classList.remove('hidden');
+                } else {
+                    card.classList.remove('team-active');
+                    card.classList.add('team-inactive');
+                    badge.classList.add('hidden');
+                }
+            });
+
+            // Update Speak mode teacher award button label
+            const speakAwardLabel = document.getElementById('speak-award-btn-label');
+            if (speakAwardLabel) {
+                speakAwardLabel.textContent = `✅ Point for ${teams[activeTeam].name} (+1)`;
+            }
+        }
+
+        function setActiveTeam(teamId) {
+            if (activeTeam !== teamId) {
+                sfxTap();
+                activeTeam = teamId;
+                updateTeamScoreboardUI();
+            }
+        }
+
+        function switchTurn(playSound = true) {
+            if (playSound) sfxTap();
+            activeTeam = activeTeam === 1 ? 2 : 1;
+            updateTeamScoreboardUI();
+        }
+
+        function toggleAutoSwitch() {
+            sfxTap();
+            autoSwitchTurn = !autoSwitchTurn;
+            document.getElementById('autoswitch-label').textContent = autoSwitchTurn ? 'Auto-Turn: ON' : 'Auto-Turn: OFF';
+        }
+
+        function awardActiveTeamPoints(points = 1) {
+            teams[activeTeam].score += points;
+            const scoreEl = document.getElementById(`score-team-${activeTeam}`);
+            scoreEl.textContent = teams[activeTeam].score;
+            scoreEl.classList.remove('animate-pop');
+            void scoreEl.offsetWidth;
+            scoreEl.classList.add('animate-pop');
+            spawnConfettiLeaves(24);
+        }
+
+        function adjustTeamScore(teamId, delta) {
+            sfxTap();
+            teams[teamId].score = Math.max(0, teams[teamId].score + delta);
+            updateTeamScoreboardUI();
+            if (delta > 0) spawnConfettiLeaves(12);
+        }
+
+        function resetCompetition() {
+            sfxTap();
+            teams[1].score = 0;
+            teams[2].score = 0;
+            activeTeam = 1;
+            updateTeamScoreboardUI();
+            resetTimer();
+        }
+
+        function editTeamName(teamId) {
+            sfxTap();
+            editingTeamId = teamId;
+            const input = document.getElementById('team-name-input');
+            input.value = teams[teamId].name;
+            const modal = document.getElementById('edit-team-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => input.focus(), 50);
+        }
+
+        function closeEditTeamModal() {
+            const modal = document.getElementById('edit-team-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            editingTeamId = null;
+        }
+
+        function saveTeamName() {
+            if (!editingTeamId) return;
+            const val = document.getElementById('team-name-input').value.trim();
+            if (val) {
+                teams[editingTeamId].name = val;
+                updateTeamScoreboardUI();
+            }
+            sfxTap();
+            closeEditTeamModal();
+        }
+
+        /* ==========================================================================
+           3C. COUNTDOWN TIMER LOGIC
+           ========================================================================== */
+        function setTimerPreset(seconds) {
+            sfxTap();
+            pauseTimer();
+            hideTimesUpBanner();
+            timerPresetSeconds = seconds;
+            timerRemainingSeconds = seconds;
+
+            // Update preset button highlights
+            document.querySelectorAll('.timer-preset').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-white');
+                btn.classList.add('text-autumn-brown');
+            });
+            const activePresetBtn = document.getElementById(`preset-${seconds}`);
+            if (activePresetBtn) {
+                activePresetBtn.classList.add('bg-amber-500', 'text-white');
+                activePresetBtn.classList.remove('text-autumn-brown');
+            }
+
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const display = document.getElementById('timer-display');
+            const bar = document.getElementById('timer-bar');
+
+            if (timerPresetSeconds === 0) {
+                display.textContent = '∞';
+                bar.style.width = '100%';
+                display.classList.remove('text-rose-600');
+                return;
+            }
+
+            const mins = Math.floor(timerRemainingSeconds / 60);
+            const secs = timerRemainingSeconds % 60;
+            display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+            const pct = Math.max(0, (timerRemainingSeconds / timerPresetSeconds) * 100);
+            bar.style.width = `${pct}%`;
+
+            if (timerRemainingSeconds <= 5 && timerRemainingSeconds > 0) {
+                display.classList.add('text-rose-600');
+            } else {
+                display.classList.remove('text-rose-600');
+            }
+        }
+
+        function toggleTimer() {
+            if (timerPresetSeconds === 0) {
+                setTimerPreset(30);
+            }
+            sfxTap();
+            if (isTimerRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        function startTimer() {
+            if (timerPresetSeconds === 0) return;
+            if (timerRemainingSeconds <= 0) {
+                timerRemainingSeconds = timerPresetSeconds;
+            }
+            hideTimesUpBanner();
+            isTimerRunning = true;
+            document.getElementById('timer-start-icon').className = 'fa-solid fa-pause';
+            document.getElementById('timer-start-text').textContent = 'Pause';
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timerRemainingSeconds--;
+                updateTimerDisplay();
+
+                if (timerRemainingSeconds > 0 && timerRemainingSeconds <= 5) {
+                    sfxTick();
+                }
+
+                if (timerRemainingSeconds <= 0) {
+                    pauseTimer();
+                    sfxTimesUp();
+                    showTimesUpBanner();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            isTimerRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('timer-start-icon').className = 'fa-solid fa-play';
+            document.getElementById('timer-start-text').textContent = 'Start';
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            hideTimesUpBanner();
+            timerRemainingSeconds = timerPresetSeconds;
+            updateTimerDisplay();
+        }
+
+        function showTimesUpBanner() {
+            const banner = document.getElementById('times-up-banner');
+            const nextTeamId = activeTeam === 1 ? 2 : 1;
+            document.getElementById('times-up-subtext').textContent =
+                `${teams[activeTeam].name}'s turn ended! Ready for ${teams[nextTeamId].name}?`;
+            banner.classList.remove('hidden');
+            banner.classList.add('flex');
+        }
+
+        function hideTimesUpBanner() {
+            const banner = document.getElementById('times-up-banner');
+            banner.classList.add('hidden');
+            banner.classList.remove('flex');
+        }
+
+        function handleTimesUpNextTurn() {
+            sfxTap();
+            hideTimesUpBanner();
+            switchTurn(false);
+            resetTimer();
+            startTimer();
+        }
+
+        /* ==========================================================================
+           4. TEXT-TO-SPEECH (WEB SPEECH SYNTHESIS - RESPECTS VOICE TOGGLE)
+           ========================================================================== */
+        let preferredVoice = null;
+
+        function loadVoices() {
+            if (!('speechSynthesis' in window)) return;
+            const voices = window.speechSynthesis.getVoices();
+            preferredVoice =
+                voices.find(v => v.lang.startsWith('en') && (v.name.includes('Samantha') || v.name.includes('Google US English') || v.name.includes('Daniel') || v.name.includes('Natural'))) ||
+                voices.find(v => v.lang.startsWith('en-US')) ||
+                voices.find(v => v.lang.startsWith('en')) ||
+                null;
+        }
+
+        if ('speechSynthesis' in window) {
+            loadVoices();
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speakText(text, onEndCallback = null) {
+            if (!isVoiceOn || !('speechSynthesis' in window)) {
+                if (onEndCallback) setTimeout(onEndCallback, 250);
+                return;
+            }
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            if (preferredVoice) utterance.voice = preferredVoice;
+            utterance.lang = 'en-US';
+            utterance.rate = speechRate;
+            utterance.pitch = 1.05;
+
+            if (onEndCallback) {
+                utterance.onend = onEndCallback;
+                utterance.onerror = onEndCallback;
+            }
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        /* ==========================================================================
+           5. NAVIGATION & VIEW SWITCHING
+           ========================================================================== */
+        function switchTab(tabName) {
+            sfxTap();
+            currentTab = tabName;
+
+            // Stop speech recognition if leaving speak tab
+            if (tabName !== 'speak' && isListening && recognition) {
+                recognition.stop();
+            }
+
+            // Update tab button styles
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('btn-orange', 'text-white', 'border-orange-300');
+                btn.classList.add('bg-white', 'text-autumn-brown', 'border-amber-300');
+            });
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.remove('bg-white', 'text-autumn-brown', 'border-amber-300');
+            activeBtn.classList.add('btn-orange', 'text-white', 'border-orange-300');
+
+            // Show active section
+            document.querySelectorAll('.game-view').forEach(sec => sec.classList.add('hidden'));
+            const activeView = document.getElementById(`view-${tabName}`);
+            activeView.classList.remove('hidden');
+            activeView.classList.add('flex');
+
+            // Initialize specific view data if needed
+            if (tabName === 'practice') {
+                setupNextMatchQuestion();
+                setupBuilderQuestion();
+            } else if (tabName === 'speak') {
+                renderSpeakCard();
+            }
+        }
+
+        /* ==========================================================================
+           6. MODE 1: VOCABULARY EXPLORER
+           ========================================================================== */
+        function renderVocabCards() {
+            const grid = document.getElementById('vocab-grid');
+            grid.innerHTML = '';
+
+            VOCAB_ITEMS.forEach(item => {
+                const card = document.createElement('button');
+                card.id = `vocab-card-${item.id}`;
+                card.className = `vocab-card bg-gradient-to-b ${item.bg} border-4 border-amber-400 rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer relative overflow-hidden`;
+                card.onclick = () => triggerVocabCard(item);
+
+                card.innerHTML = `
+                    <div class="absolute top-3 right-3 w-10 h-10 bg-amber-400/30 rounded-full flex items-center justify-center text-autumn-burnt">
+                        <i class="fa-solid fa-volume-high text-lg"></i>
+                    </div>
+                    <div class="text-7xl sm:text-8xl mb-3 transform transition-transform duration-200">
+                        ${item.emoji}
+                    </div>
+                    <div class="font-display font-bold text-2xl sm:text-3xl text-autumn-brown capitalize tracking-wide">
+                        ${item.word}
+                    </div>
+                    <div class="text-sm font-bold text-autumn-bark/80 mt-1">
+                        ${item.hint}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function triggerVocabCard(item) {
+            sfxTap();
+            // Highlight card
+            document.querySelectorAll('.vocab-card').forEach(c => c.classList.remove('speaking'));
+            const cardEl = document.getElementById(`vocab-card-${item.id}`);
+            if (cardEl) cardEl.classList.add('speaking');
+
+            speakText(item.word, () => {
+                if (cardEl) cardEl.classList.remove('speaking');
+            });
+        }
+
+        function playAllVocab() {
+            sfxTap();
+            let idx = 0;
+            function next() {
+                if (idx >= VOCAB_ITEMS.length || currentTab !== 'vocab') return;
+                const item = VOCAB_ITEMS[idx];
+                idx++;
+                document.querySelectorAll('.vocab-card').forEach(c => c.classList.remove('speaking'));
+                const cardEl = document.getElementById(`vocab-card-${item.id}`);
+                if (cardEl) cardEl.classList.add('speaking');
+
+                speakText(item.word, () => {
+                    if (cardEl) cardEl.classList.remove('speaking');
+                    setTimeout(next, 350);
+                });
+            }
+            next();
+        }
+
+        /* ==========================================================================
+           7. MODE 2: THANKFUL SENTENCES (INTERACTIVE WORD-BY-WORD & FULL AUDIO)
+           ========================================================================== */
+        function renderSentenceCards() {
+            const container = document.getElementById('sentences-list');
+            container.innerHTML = '';
+
+            SENTENCE_ITEMS.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.id = `sentence-row-${item.id}`;
+                row.className = 'bg-white/95 border-4 border-amber-300 hover:border-amber-500 rounded-3xl p-4 sm:p-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 transition-all';
+
+                const words = item.text.split(' ');
+                const wordButtonsHTML = words.map(w => {
+                    const isKeyword = w.toLowerCase() === item.highlight.toLowerCase();
+                    const styleClass = isKeyword
+                        ? 'bg-orange-100 hover:bg-orange-200 text-orange-800 border-2 border-orange-400'
+                        : 'bg-amber-50 hover:bg-amber-100 text-autumn-brown border-2 border-amber-200';
+                    return `<button onclick="speakSingleWord('${w.replace(/'/g, "\\'")}')" class="btn-tactile ${styleClass} font-display font-bold text-xl sm:text-2xl px-3.5 py-2 rounded-2xl">${w}</button>`;
+                }).join('');
+
+                row.innerHTML = `
+                    <div class="flex items-center gap-4 w-full sm:w-auto">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-amber-100 rounded-2xl border-2 border-amber-300 flex items-center justify-center text-4xl sm:text-5xl shrink-0">
+                            ${item.emoji}
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            ${wordButtonsHTML}
+                        </div>
+                    </div>
+                    <button onclick="speakFullSentence('${item.id}', '${item.text.replace(/'/g, "\\'")}')" class="btn-tactile btn-orange text-white font-display font-bold px-6 py-3.5 rounded-2xl text-lg sm:text-xl flex items-center gap-2 shrink-0 w-full sm:w-auto justify-center">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>Listen</span>
+                    </button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function speakSingleWord(word) {
+            sfxTap();
+            speakText(word);
+        }
+
+        function speakFullSentence(id, sentence) {
+            sfxTap();
+            const row = document.getElementById(`sentence-row-${id}`);
+            if (row) {
+                row.classList.add('ring-4', 'ring-orange-400', 'bg-amber-50');
+            }
+            speakText(sentence, () => {
+                if (row) {
+                    row.classList.remove('ring-4', 'ring-orange-400', 'bg-amber-50');
+                }
+            });
+        }
+
+        /* ==========================================================================
+           8. MODE 3: HARVEST PRACTICE (PICTURE MATCH & SENTENCE BUILDER)
+           ========================================================================== */
+        function setPracticeType(type) {
+            sfxTap();
+            const matchArea = document.getElementById('practice-match-area');
+            const builderArea = document.getElementById('practice-builder-area');
+            const btnMatch = document.getElementById('btn-mode-match');
+            const btnBuilder = document.getElementById('btn-mode-builder');
+
+            if (type === 'match') {
+                matchArea.classList.remove('hidden');
+                builderArea.classList.add('hidden');
+                btnMatch.className = 'btn-tactile btn-orange text-white font-display font-bold px-4 py-2.5 rounded-2xl text-base sm:text-lg';
+                btnBuilder.className = 'btn-tactile bg-amber-100 text-autumn-brown border-2 border-amber-400 font-display font-bold px-4 py-2.5 rounded-2xl text-base sm:text-lg';
+                setupNextMatchQuestion();
+            } else {
+                matchArea.classList.add('hidden');
+                builderArea.classList.remove('hidden');
+                btnBuilder.className = 'btn-tactile btn-orange text-white font-display font-bold px-4 py-2.5 rounded-2xl text-base sm:text-lg';
+                btnMatch.className = 'btn-tactile bg-amber-100 text-autumn-brown border-2 border-amber-400 font-display font-bold px-4 py-2.5 rounded-2xl text-base sm:text-lg';
+                setupBuilderQuestion();
+            }
+        }
+
+        // --- Practice A: Listen & Match Picture ---
+        function setupNextMatchQuestion() {
+            matchLocked = false;
+            document.getElementById('match-feedback').innerHTML = '';
+
+            // Combine vocab + sentences for rich listening practice
+            const combinedPool = [
+                ...VOCAB_ITEMS.map(v => ({ label: v.word, emoji: v.emoji, audio: v.word })),
+                ...SENTENCE_ITEMS.map(s => ({ label: s.text, emoji: s.emoji, audio: s.text }))
+            ];
+
+            // Pick target and 2 distinct distractors
+            const shuffled = [...combinedPool].sort(() => Math.random() - 0.5);
+            currentMatchItem = shuffled[0];
+            const options = [shuffled[0], shuffled[1], shuffled[2]].sort(() => Math.random() - 0.5);
+
+            const grid = document.getElementById('match-options-grid');
+            grid.innerHTML = '';
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-tactile bg-amber-50 hover:bg-amber-100 border-4 border-amber-300 rounded-3xl p-6 flex flex-col items-center justify-center text-center gap-3 transition-all';
+                btn.innerHTML = `
+                    <div class="text-6xl sm:text-7xl">${opt.emoji}</div>
+                    <div class="font-display font-bold text-xl sm:text-2xl text-autumn-brown capitalize">${opt.label}</div>
+                `;
+                btn.onclick = () => checkMatchAnswer(opt, btn);
+                grid.appendChild(btn);
+            });
+
+            // Auto-speak prompt after short delay
+            setTimeout(() => {
+                if (currentTab === 'practice' && !document.getElementById('practice-match-area').classList.contains('hidden')) {
+                    speakCurrentMatchPrompt();
+                }
+            }, 300);
+        }
+
+        function speakCurrentMatchPrompt() {
+            if (!currentMatchItem) return;
+            sfxTap();
+            speakText(currentMatchItem.audio);
+        }
+
+        function checkMatchAnswer(selectedOpt, btnEl) {
+            if (matchLocked) return;
+            const feedbackEl = document.getElementById('match-feedback');
+
+            if (selectedOpt.label === currentMatchItem.label) {
+                matchLocked = true;
+                sfxSuccess();
+                const scoringTeamName = teams[activeTeam].name;
+                awardActiveTeamPoints(1);
+                btnEl.classList.remove('bg-amber-50', 'border-amber-300');
+                btnEl.classList.add('bg-lime-100', 'border-lime-500', 'ring-4', 'ring-lime-300');
+                feedbackEl.innerHTML = `<span class="text-lime-700">🎉 ${scoringTeamName} gets +1 pt! "${currentMatchItem.label}"</span>`;
+                speakText('Great job!');
+                setTimeout(() => {
+                    if (autoSwitchTurn) switchTurn(false);
+                    setupNextMatchQuestion();
+                }, 1700);
+            } else {
+                sfxTryAgain();
+                btnEl.classList.add('bg-rose-100', 'border-rose-400');
+                feedbackEl.innerHTML = `<span class="text-rose-700">🍂 Listen again and try another card!</span>`;
+                speakText('Try again! ' + currentMatchItem.audio);
+                setTimeout(() => {
+                    btnEl.classList.remove('bg-rose-100', 'border-rose-400');
+                }, 900);
+            }
+        }
+
+        // --- Practice B: Sentence Builder ---
+        function setupBuilderQuestion() {
+            const targetObj = SENTENCE_ITEMS[builderIndex % SENTENCE_ITEMS.length];
+            document.getElementById('builder-emoji').textContent = targetObj.emoji;
+            document.getElementById('builder-feedback').innerHTML = '';
+
+            const words = targetObj.text.split(' ');
+            builderSelectedWords = [];
+            builderAvailableWords = words
+                .map((word, idx) => ({ id: idx, word }))
+                .sort(() => Math.random() - 0.5);
+
+            renderBuilderZones();
+        }
+
+        function renderBuilderZones() {
+            const answerZone = document.getElementById('builder-answer-zone');
+            const bankZone = document.getElementById('builder-word-bank');
+
+            // Render Selected Words
+            if (builderSelectedWords.length === 0) {
+                answerZone.innerHTML = `<span class="text-amber-600/70 font-bold text-lg">Tap words below to build your sentence...</span>`;
+            } else {
+                answerZone.innerHTML = '';
+                builderSelectedWords.forEach(item => {
+                    const chip = document.createElement('button');
+                    chip.className = 'btn-tactile bg-orange-500 text-white font-display font-bold text-xl sm:text-2xl px-4 py-2.5 rounded-2xl border-2 border-orange-300';
+                    chip.textContent = item.word;
+                    chip.onclick = () => {
+                        sfxTap();
+                        builderSelectedWords = builderSelectedWords.filter(w => w.id !== item.id);
+                        builderAvailableWords.push(item);
+                        renderBuilderZones();
+                    };
+                    answerZone.appendChild(chip);
+                });
+            }
+
+            // Render Available Word Bank
+            bankZone.innerHTML = '';
+            builderAvailableWords.forEach(item => {
+                const chip = document.createElement('button');
+                chip.className = 'btn-tactile bg-amber-100 hover:bg-amber-200 text-autumn-brown font-display font-bold text-xl sm:text-2xl px-5 py-3 rounded-2xl border-2 border-amber-400';
+                chip.textContent = item.word;
+                chip.onclick = () => {
+                    sfxTap();
+                    speakText(item.word);
+                    builderAvailableWords = builderAvailableWords.filter(w => w.id !== item.id);
+                    builderSelectedWords.push(item);
+                    renderBuilderZones();
+                };
+                bankZone.appendChild(chip);
+            });
+        }
+
+        function speakBuilderTarget() {
+            sfxTap();
+            const targetObj = SENTENCE_ITEMS[builderIndex % SENTENCE_ITEMS.length];
+            speakText(targetObj.text);
+        }
+
+        function resetCurrentBuilder() {
+            sfxTap();
+            setupBuilderQuestion();
+        }
+
+        function checkBuilderSentence() {
+            const targetObj = SENTENCE_ITEMS[builderIndex % SENTENCE_ITEMS.length];
+            const userSentence = builderSelectedWords.map(w => w.word).join(' ');
+            const feedbackEl = document.getElementById('builder-feedback');
+
+            if (userSentence === targetObj.text) {
+                sfxSuccess();
+                const scoringTeamName = teams[activeTeam].name;
+                awardActiveTeamPoints(2);
+                feedbackEl.innerHTML = `<span class="text-lime-700">🌟 ${scoringTeamName} gets +2 pts! "${targetObj.text}"</span>`;
+                speakText(targetObj.text);
+                builderIndex++;
+                setTimeout(() => {
+                    if (autoSwitchTurn) switchTurn(false);
+                    setupBuilderQuestion();
+                }, 2200);
+            } else {
+                sfxTryAgain();
+                feedbackEl.innerHTML = `<span class="text-rose-700">🍂 Not quite! Tap "Listen to Target" and check the order.</span>`;
+                speakText('Almost! Try again.');
+            }
+        }
+
+        /* ==========================================================================
+           9. MODE 4: SPEAK & SHINE (WEB SPEECH RECOGNITION + CLASSROOM FALLBACK)
+           ========================================================================== */
+        function initSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) return null;
+
+            const recog = new SpeechRecognition();
+            recog.lang = 'en-US';
+            recog.interimResults = true;
+            recog.maxAlternatives = 3;
+
+            recog.onstart = () => {
+                isListening = true;
+                updateMicUI(true);
+            };
+
+            recog.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                document.getElementById('speak-transcript').innerHTML = `You said: <span class="text-autumn-brown font-extrabold">"${transcript}"</span>`;
+
+                if (event.results[event.results.length - 1].isFinal) {
+                    evaluateSpokenPhrase(transcript);
+                }
+            };
+
+            recog.onerror = (event) => {
+                isListening = false;
+                updateMicUI(false);
+                const transcriptBox = document.getElementById('speak-transcript');
+                if (event.error === 'not-allowed') {
+                    transcriptBox.innerHTML = `<span class="text-rose-700">Microphone blocked by browser. Use the green <b>"I Said It!"</b> button below!</span>`;
+                } else {
+                    transcriptBox.innerHTML = `<span class="text-amber-800">Didn't catch that—tap the microphone to try again, or tap <b>"I Said It!"</b></span>`;
+                }
+            };
+
+            recog.onend = () => {
+                isListening = false;
+                updateMicUI(false);
+            };
+
+            return recog;
+        }
+
+        function updateMicUI(listening) {
+            const micBtn = document.getElementById('mic-btn');
+            const micLabel = document.getElementById('mic-btn-label');
+            const waveBox = document.getElementById('soundwave-box');
+
+            if (listening) {
+                micBtn.classList.add('mic-listening');
+                micLabel.textContent = 'Listening...';
+                waveBox.classList.remove('hidden');
+                waveBox.classList.add('flex');
+            } else {
+                micBtn.classList.remove('mic-listening');
+                micLabel.textContent = 'Tap to Speak';
+                waveBox.classList.add('hidden');
+                waveBox.classList.remove('flex');
+            }
+        }
+
+        function renderSpeakCard() {
+            const item = ALL_SPEAK_ITEMS[speakIndex];
+            document.getElementById('speak-counter').textContent = `${speakIndex + 1} / ${ALL_SPEAK_ITEMS.length}`;
+            document.getElementById('speak-category-badge').textContent = item.type;
+            document.getElementById('speak-emoji').textContent = item.emoji;
+            document.getElementById('speak-target-text').textContent = item.text;
+            document.getElementById('speak-transcript').innerHTML = `Tap <span class="text-rose-700">"Tap to Speak"</span> and say the phrase!`;
+        }
+
+        function listenToSpeakTarget() {
+            sfxTap();
+            const item = ALL_SPEAK_ITEMS[speakIndex];
+            speakText(item.text);
+        }
+
+        function prevSpeakItem() {
+            sfxTap();
+            speakIndex = (speakIndex - 1 + ALL_SPEAK_ITEMS.length) % ALL_SPEAK_ITEMS.length;
+            renderSpeakCard();
+        }
+
+        function nextSpeakItem() {
+            sfxTap();
+            speakIndex = (speakIndex + 1) % ALL_SPEAK_ITEMS.length;
+            renderSpeakCard();
+        }
+
+        function toggleSpeechRecognition() {
+            sfxTap();
+            if (!recognition) {
+                recognition = initSpeechRecognition();
+            }
+            if (!recognition) {
+                document.getElementById('speak-transcript').innerHTML =
+                    `<span class="text-amber-800">Speech recognition isn't supported on this browser. Say it aloud and tap <b>"I Said It!"</b> below!</span>`;
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+            } else {
+                try {
+                    window.speechSynthesis.cancel();
+                    recognition.start();
+                } catch (e) {
+                    console.warn(e);
+                }
+            }
+        }
+
+        // Kid-friendly fuzzy matching so young learners feel encouraged
+        function evaluateSpokenPhrase(spoken) {
+            const target = ALL_SPEAK_ITEMS[speakIndex].text.toLowerCase().replace(/[^a-z\s]/g, '').trim();
+            const cleanSpoken = spoken.toLowerCase().replace(/[^a-z\s]/g, '').trim();
+
+            const targetWords = target.split(/\s+/);
+            const spokenWords = cleanSpoken.split(/\s+/);
+
+            let matchedCount = 0;
+            targetWords.forEach(tw => {
+                if (spokenWords.some(sw => sw === tw || (tw.length > 3 && sw.includes(tw.slice(0, -1))))) {
+                    matchedCount++;
+                }
+            });
+
+            const accuracy = matchedCount / targetWords.length;
+
+            if (accuracy >= 0.65 || cleanSpoken.includes(target)) {
+                sfxSuccess();
+                const scoringTeamName = teams[activeTeam].name;
+                awardActiveTeamPoints(2);
+                document.getElementById('speak-transcript').innerHTML =
+                    `<span class="text-lime-700 text-xl">🌟 Awesome ${scoringTeamName}! "${spoken}" (+2 pts)</span>`;
+                speakText('Awesome job!');
+                if (autoSwitchTurn) {
+                    setTimeout(() => switchTurn(false), 1200);
+                }
+            } else {
+                sfxTryAgain();
+                document.getElementById('speak-transcript').innerHTML =
+                    `<span class="text-orange-700">You said "${spoken}". Tap <b>Listen First</b> and try again!</span>`;
+            }
+        }
+
+        function manualSpeakSuccess() {
+            sfxSuccess();
+            const scoringTeamName = teams[activeTeam].name;
+            awardActiveTeamPoints(1);
+            document.getElementById('speak-transcript').innerHTML =
+                `<span class="text-lime-700 text-xl">🎉 +1 Point awarded to ${scoringTeamName}!</span>`;
+            if (autoSwitchTurn) {
+                setTimeout(() => switchTurn(false), 900);
+            }
+        }
+
+        /* ==========================================================================
+           10. CELEBRATION / WINNER MODAL
+           ========================================================================== */
+        function openCelebrationModal() {
+            sfxFanfare();
+            spawnConfettiLeaves(50);
+
+            const t1 = teams[1];
+            const t2 = teams[2];
+            document.getElementById('modal-t1-name').textContent = `${t1.emoji} ${t1.name}`;
+            document.getElementById('modal-t1-score').textContent = t1.score;
+            document.getElementById('modal-t2-name').textContent = `${t2.emoji} ${t2.name}`;
+            document.getElementById('modal-t2-score').textContent = t2.score;
+
+            const headline = document.getElementById('winner-headline');
+            const subtext = document.getElementById('winner-subtext');
+            const emoji = document.getElementById('winner-emoji');
+
+            if (t1.score > t2.score) {
+                emoji.textContent = `🏆${t1.emoji}`;
+                headline.textContent = `${t1.name} Wins!`;
+                subtext.textContent = `Congratulations ${t1.name} on winning the Thanksgiving Harvest Cup!`;
+            } else if (t2.score > t1.score) {
+                emoji.textContent = `🏆${t2.emoji}`;
+                headline.textContent = `${t2.name} Wins!`;
+                subtext.textContent = `Congratulations ${t2.name} on winning the Thanksgiving Harvest Cup!`;
+            } else {
+                emoji.textContent = `🏆🦃`;
+                headline.textContent = `It's a Tie!`;
+                subtext.textContent = `Both ${t1.name} and ${t2.name} are Thanksgiving Champions!`;
+            }
+
+            const modal = document.getElementById('celebration-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCelebrationModal() {
+            sfxTap();
+            const modal = document.getElementById('celebration-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        /* ==========================================================================
+           11. FALLING AUTUMN LEAVES & CELEBRATION PARTICLE CANVAS
+           ========================================================================== */
+        const canvas = document.getElementById('leaves-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        const LEAF_COLORS = ['#EA580C', '#D97706', '#B91C1C', '#CA8A04', '#9A3412', '#65A30D'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createLeaf(isBurst = false) {
+            return {
+                x: isBurst ? canvas.width * (0.2 + Math.random() * 0.6) : Math.random() * canvas.width,
+                y: isBurst ? canvas.height * 0.45 : -20 - Math.random() * 100,
+                size: 10 + Math.random() * 12,
+                vx: isBurst ? (Math.random() - 0.5) * 10 : (Math.random() - 0.5) * 1.2,
+                vy: isBurst ? -4 - Math.random() * 7 : 0.8 + Math.random() * 1.4,
+                gravity: isBurst ? 0.18 : 0,
+                rotation: Math.random() * Math.PI * 2,
+                vRot: (Math.random() - 0.5) * 0.05,
+                swayPhase: Math.random() * Math.PI * 2,
+                color: LEAF_COLORS[Math.floor(Math.random() * LEAF_COLORS.length)],
+                isBurst
+            };
+        }
+
+        // Gentle ambient falling autumn leaves
+        for (let i = 0; i < 18; i++) {
+            const leaf = createLeaf(false);
+            leaf.y = Math.random() * canvas.height;
+            particles.push(leaf);
+        }
+
+        function spawnConfettiLeaves(count = 25) {
+            for (let i = 0; i < count; i++) {
+                particles.push(createLeaf(true));
+            }
+        }
+
+        function drawLeaf(p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = 0.78;
+
+            // Stylized autumn leaf shape
+            ctx.beginPath();
+            ctx.moveTo(0, -p.size);
+            ctx.quadraticCurveTo(p.size * 0.9, -p.size * 0.3, 0, p.size);
+            ctx.quadraticCurveTo(-p.size * 0.9, -p.size * 0.3, 0, -p.size);
+            ctx.fill();
+
+            // Leaf stem
+            ctx.strokeStyle = '#451A03';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(0, -p.size * 0.5);
+            ctx.lineTo(0, p.size * 1.2);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function animateLeaves() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.swayPhase += 0.025;
+                p.vy += p.gravity;
+                p.x += p.vx + (p.isBurst ? 0 : Math.sin(p.swayPhase) * 0.6);
+                p.y += p.vy;
+                p.rotation += p.vRot;
+
+                drawLeaf(p);
+
+                if (p.y > canvas.height + 40) {
+                    if (p.isBurst) {
+                        particles.splice(i, 1);
+                    } else {
+                        particles[i] = createLeaf(false);
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateLeaves);
+        }
+
+        /* ==========================================================================
+           12. INITIALIZE ON WINDOW LOAD
+           ========================================================================== */
+        window.onload = function () {
+            updateTeamScoreboardUI();
+            updateTimerDisplay();
+            renderVocabCards();
+            renderSentenceCards();
+            setupNextMatchQuestion();
+            setupBuilderQuestion();
+            renderSpeakCard();
+            animateLeaves();
+        };
+    </script>
+</body>
+</html>
